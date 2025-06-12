@@ -62,13 +62,11 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     shear_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nw')
     shear_value = tk.Label(Plot_frame_1, text= str(Shear_max) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     shear_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nw')      
-    # ====
+    # ====================================================================
     Range_label = tk.Label(Plot_frame_1, text=" (range: [" + str(min_thick_rho)+ ", "+str(max_thick_rho) + "]): ", font=('Helvetica', font_size, 'bold'))
-    Range_label.grid(row=row_range+1, column=0, padx=10, pady=10, sticky="sw")
-    
+    Range_label.grid(row=row_range+1, column=0, padx=10, pady=10, sticky="sw")    
     #================== Homogenization ==================================
-
-    fig, Young, Poisson ,Shear = Surrogates_Homogenization(TPMS_1, Density_1, Poisson_1,Young_1)
+    fig, Young_Homo, Poisson_Homo, Shear_Homo = Surrogates_Homogenization(TPMS_1, Density_TPMS, Poisson_1,Young_1)
     # Graphical user interface
     canvas = FigureCanvasTkAgg(fig, master = Plot_frame_2)
     canvas.draw()
@@ -77,7 +75,7 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     index_row = 0
     TPMS_label_2 = tk.Label(Plot_frame_2, text='TPMS: ', font = ('Helvetica', font_size, 'bold'))
     TPMS_label_2.grid(row = index_row, column=0, padx=10, pady=10, sticky="sw")
-    TPMS_label_2_1 = tk.Label(tab2, text=TPMS_2, font = ('Helvetica', font_size, 'bold'))
+    TPMS_label_2_1 = tk.Label(tab2, text=TPMS_1, font = ('Helvetica', font_size, 'bold'))
     TPMS_label_2_1.grid(row = index_row, column=1, padx=10, pady=10, sticky="sw")
     # Display Effective elastic parameters
     index_row = 0
@@ -87,19 +85,19 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     index_row = index_row + 1
     Young_label = tk.Label(Plot_frame_2, text="Young's modulus:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
     Young_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nsew')
-    Young_value = tk.Label(Plot_frame_2, text= str(Young) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
+    Young_value = tk.Label(Plot_frame_2, text= str(Young_Homo) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     Young_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')       
     # Display Shear modulus
     index_row = index_row + 1
     Shear_label = tk.Label(Plot_frame_2, text="Shear's modulus:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
     Shear_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nsew')
-    Shear_value = tk.Label(Plot_frame_2, text= str(Shear) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
+    Shear_value = tk.Label(Plot_frame_2, text= str(Shear_Homo) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     Shear_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')  
     # Display Poisson's ratio  
     index_row = index_row + 1
     Poisson_label = tk.Label(Plot_frame_2, text="Poisson's ratio:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
     Poisson_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nsew')
-    Poisson_value = tk.Label(Plot_frame_2, text= str(Poisson), font = ('Helvetica', font_size, 'bold'), bg='#fff')
+    Poisson_value = tk.Label(Plot_frame_2, text= str(Poisson_Homo), font = ('Helvetica', font_size, 'bold'), bg='#fff')
     Poisson_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')
     #------------------------------------------------------------------------------ 
     return TPMS_1, Density_TPMS, Young_1, Poisson_1
