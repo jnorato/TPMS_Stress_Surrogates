@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from Additional_Functions import*
 # =============
-def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thickness_user, Poisson_user, Cell_Size):
+def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick_rho_label, Thick_rho, Poisson_user, Cell_Size):
     #================GET-INPUTS==============================
     Folder_Path_Data = 'Surrogates_Stress/' 
     Folder_Path_Coeffs = 'Surrogates_Stress/'  +  'Sur_Poly/' 
@@ -48,6 +48,17 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
         min_thick = min_thick_list[2]
         max_thick = max_thick_list[2]
         rho_thick_TPMS = rho_thick_list[2]
+    # ============
+    if Thick_rho_label == 'Thickness':
+        min_thick_rho = min_thick*float(Cell_Size)
+        max_thick_rho = max_thick*float(Cell_Size)
+        thickness = float(Thick_rho)/float(Cell_Size) # Normalized thickness
+        Density_TPMS = np.round(thickness/rho_thick_TPMS,3)
+    elif Thick_rho_label == 'Density':
+        min_thick_rho = np.round(min_thick/rho_thick_TPMS,3)
+        max_thick_rho = np.round(max_thick/rho_thick_TPMS,3)
+        Density_TPMS = np.round(float(Thick_rho),3)
+        thickness = (Density_TPMS*rho_thick_TPMS) # Normalized thickness
     # ================================================
     Loads = ['E11', 'E22', 'E33', 'E12', 'E13', 'E23']    
     Loads_Tittle = ['X-Normal', 'Y-Normal', 'Z-Normal', 'XY-Shear', 'XZ-Shear', 'YZ-Shear']
@@ -62,7 +73,7 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
     X_Train = df_X_Train.values
     Thick_Set_Train, Poisson_Set_Train = X_Train[:,0], X_Train[:,1]
     #=========CHECKING VALIDITY OF INPUTS=================   
-    if is_number(Thickness_user) or float(Thickness_user)*float(Cell_Size) < min_thick*float(Cell_Size) or float(Thickness_user)*float(Cell_Size) > max_thick*float(Cell_Size):                
+    if is_number(Thick_rho) or float(thickness)*float(Cell_Size) < min_thick*float(Cell_Size) or float(thickness)*float(Cell_Size) > max_thick*float(Cell_Size):                
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.text(0.5, 0.6, 'Invalid Thickness!!!', fontsize = 30, fontweight='bold', color = 'red',ha='center')
@@ -90,8 +101,7 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
         Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max = 0, 0, 0, 0
     else:
         # ===================START PREDICTION====================
-        thickness = float(Thickness_user)/float(Cell_Size) # Normalized thickness
-        Density_TPMS = thickness/rho_thick_TPMS
+        thickness = float(Thick_rho)/float(Cell_Size) # Normalized thickness
         # ---------------    
         poisson = float(Poisson_user) # Poisson from users
         # Traction applied to unit cells
@@ -264,4 +274,4 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
         ax4 = Plot_Shell_Elements(ax4, title_name_4, cbar_name_4,norm_4, mapped_colors_4,vertices_2, faces_2)
 
 
-    return fig, Density_TPMS, Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max
+    return fig, Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max, Density_TPMS, min_thick_rho, max_thick_rho
