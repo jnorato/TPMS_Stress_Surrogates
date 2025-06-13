@@ -172,7 +172,8 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
 
     save_stress_button = tk.Button(tab1, text="Save Stress", font=('Helvetica', font_size, 'bold'),
                                    command=lambda: save_stress_to_csv(TPMS_1, Shell_Surface_1, Unit_18), bg='#fcc', fg='black')
-    save_stress_button.grid(row=0, column=5, padx=5, pady=10, sticky="n")
+    save_stress_button.grid(row=0, column=3, padx=5, pady=10, sticky="n")
+
     # Graphical user interfaces
     canvas = FigureCanvasTkAgg(fig, master = Plot_frame_1)
     canvas.draw()
@@ -257,6 +258,7 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
 # =========================
 #------------------------------------------------------------------------------
 root = tk.Tk()
+root.state('zoomed')  # For Windows: maximizes the window
 root.title("TPMS_UConn_Project")
 root.geometry("1366x768")
 #------------------------------------------------------------------------------
