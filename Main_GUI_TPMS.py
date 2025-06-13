@@ -247,7 +247,7 @@ def Plot_GUI(Plot_frame_1,Plot_frame_2, row_range):
 #------------------------------------------------------------------------------
 root = tk.Tk()
 root.state('zoomed')  # For Windows: maximizes the window
-root.title("TPMS_UConn_Project")
+root.title("TPMS_Stress_Surrogates")
 root.geometry("1366x768")
 #------------------------------------------------------------------------------
 # Create a tabbed layout
