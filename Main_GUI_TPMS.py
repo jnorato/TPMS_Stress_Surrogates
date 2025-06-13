@@ -6,13 +6,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 matplotlib.use('Agg')
 from Surrogates_Stress import*
 from Surrogates_Homogenization import*
-# ======Plot and update===================
 import pandas as pd
 from tkinter import filedialog, messagebox
 import os
-import pandas as pd
-from tkinter import filedialog, messagebox
-
+# ======Read inputs==========
 def read_input_file():
     filepath = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")],
                                           title="Open input parameters CSV")
@@ -44,11 +41,7 @@ def read_input_file():
         messagebox.showinfo("Loaded", f"Inputs loaded from:\n{filepath}")
     except Exception as e:
         messagebox.showerror("Error", f"Failed to read file:\n{e}")
-
-# =========================================
-import pandas as pd
-from tkinter import filedialog, messagebox
-
+# =====Save inputs=================
 def save_input_file():
     # Collect current values from Tkinter variables
     data = {
@@ -81,14 +74,12 @@ def save_input_file():
         messagebox.showinfo("Success", f"Inputs saved to:\n{filepath}")
     except Exception as e:
         messagebox.showerror("Error", f"Could not save file:\n{e}")
-# ======
+# ======Save stress==================
 def save_stress_to_csv(TPMS, Shell_Surface, Unit_18):
     try:
         # Save the result to CSV
         header = ['x', 'y', 'z', 'sigma_11', 'sigma_22', 'sigma_12', 'vonMises']
         df = pd.DataFrame(Unit_18, columns=header)
-        # Create Output folder if it doesn't exist
-        
         # Ask user where to save
         default_name = f"{TPMS}_Stress_On_{Shell_Surface}_Face.csv"
         filepath = filedialog.asksaveasfilename(defaultextension=".csv",
@@ -107,15 +98,12 @@ def save_stress_to_csv(TPMS, Shell_Surface, Unit_18):
     except Exception as e:
         messagebox.showerror("Error", f"Failed to save stress data:\n{e}")
 
-# =========================================
+# ========Save homogenization=================
 def save_homogenization_to_csv(TPMS, Elasticity_Tensor):
     try:
         # Save the result to CSV
-        # Create DataFrame and export
-        
-        df = pd.DataFrame(Elasticity_Tensor)
-        # Create Output folder if it doesn't exist
-        
+        # Create DataFrame and export        
+        df = pd.DataFrame(Elasticity_Tensor)       
         # Ask user where to save
         default_name = f"{TPMS}_Elasticity_Tensor.csv"
         filepath = filedialog.asksaveasfilename(defaultextension=".csv",
@@ -134,8 +122,8 @@ def save_homogenization_to_csv(TPMS, Elasticity_Tensor):
     except Exception as e:
         messagebox.showerror("Error", f"Failed to save Elasticity Tensor data:\n{e}")
 
-# =========================================
-def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
+# ===Plot and update=============
+def Plot_GUI(Plot_frame_1,Plot_frame_2, row_range):
     # Update and plot the stress
     read_input_button = tk.Button(Plot_frame_1, text="Load inputs", font=('Helvetica', font_size, 'bold'),
                               command=read_input_file, bg='#eef', fg='black')
@@ -392,9 +380,9 @@ tab2 = ttk.Frame(notebook)
 notebook.add(tab2, text='Effective elastic properties')
 font_size = 10
 # ===========Main Run=========================
-TPMS_1, Density_TPMS, Young_1, Poisson_1 = Frame_Tab_1(tab1,tab2,row_range)
+TPMS_1, Density_TPMS, Young_1, Poisson_1 = Plot_GUI(tab1,tab2,row_range)
 # Add button to update
-update_button_tab1 = tk.Button(tab1, text = 'Update and Plot', command = lambda: Frame_Tab_1(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='red')
+update_button_tab1 = tk.Button(tab1, text = 'Update and Plot', command = lambda: Plot_GUI(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='red')
 update_button_tab1.grid(row = 0, column = 0, columnspan=2, padx = 20, pady = 10)
 # Add button to exit
 exit_button = tk.Button(tab1, text="Exit", font=('Helvetica', font_size, 'bold'), command=root.destroy)
@@ -404,7 +392,7 @@ exit_button.grid(row=0, column=4, padx=5, pady=10, sticky="n")
 tab1.grid_rowconfigure(0, weight=1)
 tab1.grid_columnconfigure(2, weight=1)
 # Add button to update
-update_button_tab2 = tk.Button(tab2, text = 'Update and Plot', command = lambda: Frame_Tab_1(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='red')
+update_button_tab2 = tk.Button(tab2, text = 'Update and Plot', command = lambda: Plot_GUI(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='red')
 update_button_tab2.grid(row = 0, column = 0, columnspan=2, padx = 20, pady = 10)
 # Add button to exit
 exit_button = tk.Button(tab2, text="Exit", font=('Helvetica', font_size, 'bold'), command=root.destroy)
