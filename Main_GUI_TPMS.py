@@ -7,8 +7,145 @@ matplotlib.use('Agg')
 from Surrogates_Stress import*
 from Surrogates_Homogenization import*
 # ======Plot and update===================
+import pandas as pd
+from tkinter import filedialog, messagebox
+import os
+import pandas as pd
+from tkinter import filedialog, messagebox
+
+def read_input_file():
+    filepath = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")],
+                                          title="Open input parameters CSV")
+    if not filepath:
+        return  # user canceled
+
+    try:
+        df = pd.read_csv(filepath, index_col=0)
+        data = df["Value"].to_dict()
+
+        # Set GUI values
+        TPMS_var_1.set(data.get("TPMS", ""))
+        Surface_var_1.set(data.get("Shell_Surface", ""))
+
+        Traction_X_Entry_1_var.set(data.get("F_X", 0))
+        Traction_Y_Entry_1_var.set(data.get("F_Y", 0))
+        Traction_Z_Entry_1_var.set(data.get("F_Z", 0))
+        Traction_XY_Entry_1_var.set(data.get("F_XY", 0))
+        Traction_XZ_Entry_1_var.set(data.get("F_XZ", 0))
+        Traction_YZ_Entry_1_var.set(data.get("F_YZ", 0))
+
+        Thick_rho_label_1_var.set(data.get("Thick_rho_label", ""))
+        Thick_rho_Entry_1_var.set(data.get("Thick_rho", 0.0))
+
+        Poisson_Entry_1_var.set(data.get("Poisson_user", 0.3))
+        Young_Entry_1_var.set(data.get("Young_user", 119000))
+        Cell_Size_Entry_1_var.set(data.get("Cell_Size", 1))
+
+        messagebox.showinfo("Loaded", f"Inputs loaded from:\n{filepath}")
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to read file:\n{e}")
+
+# =========================================
+import pandas as pd
+from tkinter import filedialog, messagebox
+
+def save_input_file():
+    # Collect current values from Tkinter variables
+    data = {
+        "TPMS": TPMS_var_1.get(),
+        "Shell_Surface": Surface_var_1.get(),
+        "F_X": Traction_X_Entry_1_var.get(),
+        "F_Y": Traction_Y_Entry_1_var.get(),
+        "F_Z": Traction_Z_Entry_1_var.get(),
+        "F_XY": Traction_XY_Entry_1_var.get(),
+        "F_XZ": Traction_XZ_Entry_1_var.get(),
+        "F_YZ": Traction_YZ_Entry_1_var.get(),
+        "Thick_rho_label": Thick_rho_label_1_var.get(),
+        "Thick_rho": Thick_rho_Entry_1_var.get(),
+        "Poisson_user": Poisson_Entry_1_var.get(),
+        "Young_user": Young_Entry_1_var.get(),
+        "Cell_Size": Cell_Size_Entry_1_var.get()
+    }
+
+    # Ask user to choose save location
+    filepath = filedialog.asksaveasfilename(defaultextension=".csv",
+                                            filetypes=[("CSV files", "*.csv")],
+                                            title="Save input parameters to CSV")
+    if not filepath:
+        return  # User cancelled
+
+    try:
+        # Convert to DataFrame and save
+        df = pd.DataFrame(list(data.items()), columns=["Parameter", "Value"])
+        df.to_csv(filepath, index=False)
+        messagebox.showinfo("Success", f"Inputs saved to:\n{filepath}")
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not save file:\n{e}")
+# ======
+def save_stress_to_csv(TPMS, Shell_Surface, Unit_18):
+    try:
+        # Save the result to CSV
+        header = ['x', 'y', 'z', 'sigma_11', 'sigma_22', 'sigma_12', 'vonMises']
+        df = pd.DataFrame(Unit_18, columns=header)
+        # Create Output folder if it doesn't exist
+        
+        # Ask user where to save
+        default_name = f"{TPMS}_Stress_On_{Shell_Surface}_Face.csv"
+        filepath = filedialog.asksaveasfilename(defaultextension=".csv",
+                                                initialfile=default_name,
+                                                filetypes=[("CSV files", "*.csv")])
+        # Create Output folder if it doesn't exist
+        output_folder = "Output"
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        if not filepath:
+            return  # user cancelled
+
+        df.to_csv(filepath, index=False)
+        messagebox.showinfo("Saved", f"Stress data saved to:\n{filepath}")
+
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to save stress data:\n{e}")
+
+# =========================================
+def save_homogenization_to_csv(TPMS, Elasticity_Tensor):
+    try:
+        # Save the result to CSV
+        # Create DataFrame and export
+        
+        df = pd.DataFrame(Elasticity_Tensor)
+        # Create Output folder if it doesn't exist
+        
+        # Ask user where to save
+        default_name = f"{TPMS}_Elasticity_Tensor.csv"
+        filepath = filedialog.asksaveasfilename(defaultextension=".csv",
+                                                initialfile=default_name,
+                                                filetypes=[("CSV files", "*.csv")])
+        # Create Output folder if it doesn't exist
+        output_folder = "Output"
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        if not filepath:
+            return  # user cancelled
+
+        df.to_csv(filepath, index=False, header=False)
+        messagebox.showinfo("Saved", f"Elasticity Tensor saved to:\n{filepath}")
+
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to save Elasticity Tensor data:\n{e}")
+
+# =========================================
 def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     # Update and plot the stress
+    read_input_button = tk.Button(Plot_frame_1, text="Load inputs", font=('Helvetica', font_size, 'bold'),
+                              command=read_input_file, bg='#eef', fg='black')
+    read_input_button.grid(row=0, column=0, padx=5, pady=10, sticky="n")
+    # =======
+    save_input_button = tk.Button(tab1, text="Save inputs", font=('Helvetica', font_size, 'bold'),
+                              command=save_input_file, bg='#efe', fg='black')
+    save_input_button.grid(row=0, column=1, padx=5, pady=10, sticky="n")
+    
+    # ===================================================
     TPMS_1 = str(TPMS_var_1.get()) # TPMS types
     Shell_Surface_1 =  str(Surface_var_1.get()) # Faces
     Cell_Size =  Cell_Size_Entry_1_var.get() # Cell size
@@ -24,9 +161,18 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     Thick_rho_1 = Thick_rho_Entry_1_var.get() # Thickness or density
     Poisson_1 =  Poisson_Entry_1_var.get() # Poisson's ratio
     Young_1 =  Young_Entry_1_var.get() # Young's modulus
+    
+    
+    
     # Surrogates of stress
-    fig, Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max ,Density_TPMS,  min_thick_rho, max_thick_rho= Surrogates_Stress(TPMS_1, Shell_Surface_1, F_X, F_Y, F_Z, F_XY, F_XZ,
+    fig, Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max ,Density_TPMS, min_thick_rho, max_thick_rho, Unit_18 = Surrogates_Stress(TPMS_1, Shell_Surface_1, F_X, F_Y, F_Z, F_XY, F_XZ,
                                                                                              F_YZ, Thick_rho_label, Thick_rho_1, Poisson_1,Cell_Size)
+    # ====Save stress
+    # Define your header
+
+    save_stress_button = tk.Button(tab1, text="Save Stress", font=('Helvetica', font_size, 'bold'),
+                                   command=lambda: save_stress_to_csv(TPMS_1, Shell_Surface_1, Unit_18), bg='#fcc', fg='black')
+    save_stress_button.grid(row=0, column=5, padx=5, pady=10, sticky="n")
     # Graphical user interfaces
     canvas = FigureCanvasTkAgg(fig, master = Plot_frame_1)
     canvas.draw()
@@ -66,7 +212,12 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     Range_label = tk.Label(Plot_frame_1, text=" (range: [" + str(min_thick_rho)+ ", "+str(max_thick_rho) + "]): ", font=('Helvetica', font_size, 'bold'))
     Range_label.grid(row=row_range+1, column=0, padx=10, pady=10, sticky="sw")    
     #================== Homogenization ==================================
-    fig, Young_Homo, Poisson_Homo, Shear_Homo = Surrogates_Homogenization(TPMS_1, Density_TPMS, Poisson_1,Young_1)
+    fig, Young_Homo, Poisson_Homo, Shear_Homo, Elasticity_Tensor = Surrogates_Homogenization(TPMS_1, Density_TPMS, Poisson_1,Young_1)
+    
+    # ====Save Homogenization
+    save_stress_button = tk.Button(tab2, text="Save Homogenization", font=('Helvetica', font_size, 'bold'),
+                                   command=lambda: save_homogenization_to_csv(TPMS_1, Elasticity_Tensor), bg='#fcc', fg='black')
+    save_stress_button.grid(row=0, column=3, padx=5, pady=10, sticky="n")
     # Graphical user interface
     canvas = FigureCanvasTkAgg(fig, master = Plot_frame_2)
     canvas.draw()
@@ -100,6 +251,8 @@ def Frame_Tab_1(Plot_frame_1,Plot_frame_2, row_range):
     Poisson_value = tk.Label(Plot_frame_2, text= str(Poisson_Homo), font = ('Helvetica', font_size, 'bold'), bg='#fff')
     Poisson_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')
     #------------------------------------------------------------------------------ 
+
+    
     return TPMS_1, Density_TPMS, Young_1, Poisson_1
 # =========================
 #------------------------------------------------------------------------------
@@ -128,7 +281,7 @@ TPMS_option = tk.OptionMenu(tab1, TPMS_var_1, *options)
 TPMS_option.grid(row = index_row, column=1, padx=10, pady=10, sticky="sw")
 # Label for BOTTOM and TOP faces
 index_row = index_row + 1
-Surface_label_1 = tk.Label(tab1, text='Faces: ', font = ('Helvetica', font_size, 'bold'))
+Surface_label_1 = tk.Label(tab1, text='Face: ', font = ('Helvetica', font_size, 'bold'))
 Surface_label_1.grid(row = index_row, column=0, padx=10, pady=10, sticky="sw")
 options = ['Top', 'Bottom']
 Surface_var_1 = tk.StringVar(tab1)

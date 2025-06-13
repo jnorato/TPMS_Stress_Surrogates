@@ -1,0 +1,14 @@
+Parameter,Value
+TPMS,Gyroid
+Shell_Surface,Top
+F_X,100
+F_Y,1000
+F_Z,1000
+F_XY,10
+F_XZ,20
+F_YZ,30
+Thick_rho_label,Density
+Thick_rho,0.1
+Poisson_user,0.3
+Young_user,119000
+Cell_Size,1

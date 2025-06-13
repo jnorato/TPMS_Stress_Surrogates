@@ -95,9 +95,6 @@ def Surrogates_Homogenization(TPMS, Density_user, Poisson_user, Young_user):
         ax.set_xticklabels([str(i) for i in range(1, 7)], fontsize=14)
         ax.set_yticklabels([str(i) for i in range(1, 7)], fontsize=14)
         plt.title("Elasticity Tensor",  fontsize=16)
-        # =====Export stress==========
-        # Define your header
-        # Create DataFrame and export
-        df = pd.DataFrame(Elasticity_Tensor)
-        df.to_csv(TPMS +'_Elasticity_Tensor.csv', index=False, header=False)
-    return fig, np.round(E_Homo_i,3), np.round(nu_Homo_i,3),np.round(G_Homo_i,3)
+        # =====end==========
+
+    return fig, np.round(E_Homo_i,3), np.round(nu_Homo_i,3),np.round(G_Homo_i,3), Elasticity_Tensor

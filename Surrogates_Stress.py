@@ -274,10 +274,5 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
         ax4 = Plot_Shell_Elements(ax4, title_name_4, cbar_name_4,norm_4, mapped_colors_4,vertices_2, faces_2)
 
         # =====Export stress==========
-        # Define your header
-        header = ['x', 'y', 'z', 'sigma_11', 'sigma_22', 'sigma_12', 'vonMises']        
-        # Create DataFrame and export
-        df = pd.DataFrame(Unit_18, columns=header)
-        df.to_csv(TPMS +'_Stress_On_' + Shell_Surface +'_Face.csv', index=False)
         # End
-    return fig, Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max, Density_TPMS, min_thick_rho, max_thick_rho
+    return fig, Vonmises_max, Sigma_1_max, Sigma_2_max, Shear_max, Density_TPMS, min_thick_rho, max_thick_rho, Unit_18
