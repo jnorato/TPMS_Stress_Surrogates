@@ -107,8 +107,8 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
         # Traction applied to unit cells
         Traction_Vec = np.array([float(F_X), float(F_Y), float(F_Z), float(F_XY), float(F_XZ), float(F_YZ)])
         #--------------------------------IMPORT-XYZ-------------------------------------           
-        df_Abaqus = pd.read_pickle( Folder_Path_Data + name_model + '_' + 'E11' + '_Thick_Poisson_' +  str(Traction_Pred) + 
-                                   '_Macro_Force_'  + 'Pred_LHS_'+str(num_samples_pred) + '_' + Shell_Surface + '.pkl' , compression='zip')  # Import csv file        
+        df_Abaqus = pd.read_pickle( Folder_Path_Data + name_model + '_' + 'E11' + '_Thick_Poisson_' +  str(10) + 
+                                   '_Macro_Force_'  + 'Pred_LHS_'+str(30) + '_Bottom.pkl' , compression='zip')  # Import csv file        
         data_Unit_18 = df_Abaqus.values
         #--no of elements--
         no_ele = int(data_Unit_18.shape[0]/8)      

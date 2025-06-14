@@ -126,11 +126,11 @@ def save_homogenization_to_csv(TPMS, Elasticity_Tensor):
 def Plot_GUI(Plot_frame_1,Plot_frame_2, row_range):
     # Update and plot the stress
     read_input_button = tk.Button(Plot_frame_1, text="Load inputs", font=('Helvetica', font_size, 'bold'),
-                              command=read_input_file, bg='#eef', fg='black')
+                              command=read_input_file, bg='#fff', fg='black')
     read_input_button.grid(row=0, column=0, padx=5, pady=10, sticky="n")
     # =======
     save_input_button = tk.Button(tab1, text="Save inputs", font=('Helvetica', font_size, 'bold'),
-                              command=save_input_file, bg='#efe', fg='black')
+                              command=save_input_file, bg='#fff', fg='black')
     save_input_button.grid(row=0, column=1, padx=5, pady=10, sticky="n")
     
     # ===================================================
@@ -159,7 +159,7 @@ def Plot_GUI(Plot_frame_1,Plot_frame_2, row_range):
     # Define your header
 
     save_stress_button = tk.Button(tab1, text="Save Stress", font=('Helvetica', font_size, 'bold'),
-                                   command=lambda: save_stress_to_csv(TPMS_1, Shell_Surface_1, Unit_18), bg='#fcc', fg='black')
+                                   command=lambda: save_stress_to_csv(TPMS_1, Shell_Surface_1, Unit_18), bg='#fff', fg='black')
     save_stress_button.grid(row=0, column=3, padx=5, pady=10, sticky="n")
 
     # Graphical user interfaces
@@ -169,31 +169,31 @@ def Plot_GUI(Plot_frame_1,Plot_frame_2, row_range):
     
     # Display relative density
     index_row = 0
-    rho_label = tk.Label(Plot_frame_1, text="Relative density:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
+    rho_label = tk.Label(Plot_frame_1, text="Relative density:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
     rho_label.grid(row=index_row, column=3, padx=2, pady=10, sticky='sw')
     rho_value = tk.Label(Plot_frame_1, text= str(Density_TPMS)  , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     rho_value.grid(row=index_row, column=4, padx=2, pady=10, sticky='sw')
     # Display Max_VonMises 
     index_row = index_row + 1
-    vonmises_label = tk.Label(Plot_frame_1, text="Maximum von Mises stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
+    vonmises_label = tk.Label(Plot_frame_1, text="Maximum von Mises stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
     vonmises_label.grid(row=index_row, column=3, padx=2, pady=10, sticky='sw')
     vonmises_value = tk.Label(Plot_frame_1, text= str(Vonmises_max)  , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     vonmises_value.grid(row=index_row, column=4, padx=2, pady=10, sticky='sw')
     # Display Max_Sigma_1 
     index_row = index_row + 1
-    Sigma_1_label = tk.Label(Plot_frame_1, text="Major principal stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
+    Sigma_1_label = tk.Label(Plot_frame_1, text="Major principal stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
     Sigma_1_label.grid(row=index_row, column=3, padx=2, pady=10, sticky='sw')
     Sigma_1_value = tk.Label(Plot_frame_1, text= str(Sigma_1_max)  , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     Sigma_1_value.grid(row=index_row, column=4, padx=2, pady=10, sticky='sw')
      # Display Max_Sigma_2 
     index_row = index_row + 1
-    Sigma_2_label = tk.Label(Plot_frame_1, text="Minor principal stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
+    Sigma_2_label = tk.Label(Plot_frame_1, text="Minor principal stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
     Sigma_2_label.grid(row=index_row, column=3, padx=2, pady=10, sticky='sw')
     Sigma_2_value = tk.Label(Plot_frame_1, text= str(Sigma_2_max)  , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     Sigma_2_value.grid(row=index_row, column=4, padx=2, pady=10, sticky='sw')
     # Display Max_Shear
     index_row = index_row + 1
-    shear_label = tk.Label(Plot_frame_1, text="Maximum shear stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
+    shear_label = tk.Label(Plot_frame_1, text="Maximum shear stress:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
     shear_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nw')
     shear_value = tk.Label(Plot_frame_1, text= str(Shear_max) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
     shear_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nw')      
@@ -223,22 +223,23 @@ def Plot_GUI(Plot_frame_1,Plot_frame_2, row_range):
     Elastic_label.grid(row=index_row, column=3, columnspan=2,padx=4, pady=10, sticky='sw')
     # Display Young modulus
     index_row = index_row + 1
-    Young_label = tk.Label(Plot_frame_2, text="Young's modulus:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
-    Young_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nsew')
+    Young_label = tk.Label(Plot_frame_2, text="Young's modulus:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
+    Young_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='sw')
     Young_value = tk.Label(Plot_frame_2, text= str(Young_Homo) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
-    Young_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')       
+    Young_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='sw')       
+    
     # Display Shear modulus
     index_row = index_row + 1
-    Shear_label = tk.Label(Plot_frame_2, text="Shear's modulus:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
-    Shear_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nsew')
+    Shear_label = tk.Label(Plot_frame_2, text="Shear's modulus:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
+    Shear_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='sw')
     Shear_value = tk.Label(Plot_frame_2, text= str(Shear_Homo) , font = ('Helvetica', font_size, 'bold'), bg='#fff')
-    Shear_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')  
+    Shear_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='sw')  
     # Display Poisson's ratio  
     index_row = index_row + 1
-    Poisson_label = tk.Label(Plot_frame_2, text="Poisson's ratio:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='red')
-    Poisson_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nsew')
+    Poisson_label = tk.Label(Plot_frame_2, text="Poisson's ratio:", font = ('Helvetica', font_size, 'bold'), bg='#fff', fg='black')
+    Poisson_label.grid(row=index_row, column=3, padx=4, pady=10, sticky='nw')
     Poisson_value = tk.Label(Plot_frame_2, text= str(Poisson_Homo), font = ('Helvetica', font_size, 'bold'), bg='#fff')
-    Poisson_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nsew')
+    Poisson_value.grid(row=index_row, column=4, padx=4, pady=10, sticky='nw')
     #------------------------------------------------------------------------------ 
 
     
@@ -382,7 +383,7 @@ font_size = 10
 # ===========Main Run=========================
 TPMS_1, Density_TPMS, Young_1, Poisson_1 = Plot_GUI(tab1,tab2,row_range)
 # Add button to update
-update_button_tab1 = tk.Button(tab1, text = 'Update and Plot', command = lambda: Plot_GUI(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='red')
+update_button_tab1 = tk.Button(tab1, text = 'Update and Plot', command = lambda: Plot_GUI(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='black')
 update_button_tab1.grid(row = 0, column = 0, columnspan=2, padx = 20, pady = 10)
 # Add button to exit
 exit_button = tk.Button(tab1, text="Exit", font=('Helvetica', font_size, 'bold'), command=root.destroy)
@@ -392,7 +393,7 @@ exit_button.grid(row=0, column=4, padx=5, pady=10, sticky="n")
 tab1.grid_rowconfigure(0, weight=1)
 tab1.grid_columnconfigure(2, weight=1)
 # Add button to update
-update_button_tab2 = tk.Button(tab2, text = 'Update and Plot', command = lambda: Plot_GUI(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='red')
+update_button_tab2 = tk.Button(tab2, text = 'Update and Plot', command = lambda: Plot_GUI(tab1,tab2,row_range), font = ('Helvetica', font_size + 2, 'bold'), bg='#fff', fg='black')
 update_button_tab2.grid(row = 0, column = 0, columnspan=2, padx = 20, pady = 10)
 # Add button to exit
 exit_button = tk.Button(tab2, text="Exit", font=('Helvetica', font_size, 'bold'), command=root.destroy)
