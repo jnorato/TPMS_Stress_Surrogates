@@ -83,7 +83,7 @@ def Surrogates_Homogenization(TPMS, Density_user, Poisson_user, Young_user):
         
         # Plot the elasticity tensor
         fig, ax = plt.subplots()
-        cax = ax.matshow(Elasticity_Tensor, cmap="tab10")
+        cax = ax.matshow(Elasticity_Tensor, cmap="coolwarm")
 
         # Add values to each cell
         for (i, j), val in np.ndenumerate(Elasticity_Tensor):
