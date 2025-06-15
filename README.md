@@ -1,3 +1,14 @@
+Surrogate models of stress for triply periodic minimal surface lattices
+Sy Nguyen-Van, Guha Manogharan, Lan-Hsuan Huang, Julian A. Norato
+
+Citation
+Sy Nguyen-Van, Guha Manogharan, Lan-Hsuan Huang, Julián A. Norato,
+Surrogate models of stress for triply periodic minimal surface lattices,
+Computer Methods in Applied Mechanics and Engineering,
+Volume 444, 2025, 118119, ISSN 0045-7825,
+https://doi.org/10.1016/j.cma.2025.118119.
+(https://www.sciencedirect.com/science/article/pii/S0045782525003913)
+Keywords: TPMS lattices; Surrogate models; Multi-scale analysis
 1. To use graphical user interface (GUI): Run "Main_GUI_TPMS.py". The users need to install "tkinter" before using
 2. For stress's prediction, call "Surrogates_Stress.py"
 ```
