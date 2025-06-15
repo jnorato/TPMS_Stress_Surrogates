@@ -12,6 +12,7 @@ def Surrogates_Stress(TPMS,Shell_Surface, F_X, F_Y, F_Z, F_XY, F_XZ, F_YZ, Thick
     df_vertices_1 = pd.read_csv(Folder_Path_Data +TPMS +'_Unit_Size_1_Nodes.csv', header=None)
     vertices_1 = df_vertices_1.values
     # ===
+
     vertices_2 = vertices_1*float(Cell_Size)
     # ---
     df_elements = pd.read_csv(Folder_Path_Data+TPMS +'_Unit_Size_1_Shell_Elements.csv', header=None)
