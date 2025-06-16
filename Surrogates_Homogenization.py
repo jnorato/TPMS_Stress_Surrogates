@@ -7,8 +7,8 @@ def Surrogates_Homogenization(TPMS, Density_user, Poisson_user, Young_user):
     #================GET-INPUTS==============================
     Folder_Path_Coeffs = 'Surrogates_Homogenization/'
         # ================================
-    max_density = 1; # Minimum Density-depend on manufacturing's ability
-    min_density_list = [0.063, 0.057, 0.0256];   # Maximum Density for Gyroid, Primitive, IWP
+    max_density = 1; # Maximum Density
+    min_density_list = [0.063, 0.057, 0.0256];   # Minimum Density for Gyroid, Primitive, IWP
     min_poisson = 0.2; # Minimum poisson
     max_poisson = 0.4; # Maximum poisson  
     # ========
